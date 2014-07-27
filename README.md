@@ -2,11 +2,6 @@ Vagrant Chef Server
 ===================
 This repo contains a self provisioning chef server in Vagrant
 
-
-Note in order to run this you'll need a local chef-client installed which can be installed with the following:
-
-curl -L https://www.opscode.com/chef/install.sh | sudo bash
-
 ###Repository Components
 ####/systems
 Vagrant definitions for individual systems are located in the systems directory.  Each system is a single vagrant file within a directory.
@@ -23,6 +18,15 @@ The system defined at systems/0.chef_server/Vagrantfile is the Chef server.  In 
  * pulls down the validation.pem used to authenticate clients to the chef server
  * pulls down the admin.pem file used by knife to interact with the server
  * uploads the contents of the chef-repo to the chef-server
+
+## Getting Started
+This repository includes a Gemfile and Rakefile to automate the task of interacting with the hosts and the Chef server.  To get started with run `sudo gem install bundler; bundle install` to install bundler and install the Ruby Gems defined in the Gemfile.
+
+Once you have the following Rake tasks available:
+ * `rake install_chef` - Installs the Chef client onto your workstation using the Omnibus installer at getchef.com
+ * `rake setup_server` - Brings up a Chef Server, syncs the local repository, and pulls the admin user's private key to your workstation
+ * `rake sync_repo` - Syncs the local copy of the repository to the chef-server.  Since we're not running autoknife you'll need to run this when you make local changes
+ * `rake wipe_chef_nodes` - This will delete the client/node key pairs from the chef server so you can reprovision the various systems in the /systems directory
 
 #### Alternative
 
