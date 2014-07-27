@@ -9,6 +9,10 @@ task :install_chef do
   sh 'curl -L https://www.opscode.com/chef/install.sh | sudo bash'
 end
 
+task :setup_server do
+  sh './setup_server.sh'
+end
+
 task :sync_repo do
   sh 'cd chef-repo; knife upload / -c ../knife_config/knife.rb'
 end
